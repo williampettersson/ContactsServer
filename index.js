@@ -63,6 +63,42 @@ app.delete("/contact/:id", (req, res) => {
     });
 });
 
+app.patch("/contact/:id", (req, res) => {
+  const body = req.body;
+
+  if (!body?.name && !body.phone && !body.email) {
+    res.sendStatus(400);
+    return;
+  }
+
+  const id = ObjectId.createFromHexString(req.params.id);
+  const change = {};
+
+  if (body.name) change.name = body.name;
+  if (body.phone) change.phone = body.phone;
+  if (body.email) change.email = body.email;
+
+  contacts
+    .findOneAndUpdate({ _id: id }, { $set: change })
+    .then((result) => {
+      if (result.ok) {
+        res.sendStatus(200);
+        return;
+      }
+
+      if (!result.value) {
+        res.sendStatus(404);
+        return;
+      }
+
+      res.sendStatus(500);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+      console.error(err);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });

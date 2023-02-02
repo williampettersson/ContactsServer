@@ -6,7 +6,7 @@
 - [GET /contacts](#get-all-contacts)
 - [GET /contact/:id](#get-contact-by-id)
 - [DELETE /contact/:id](#delete-contact-by-id)
-- [PUT /contact/:id](#update-contact-by-id)
+- [PATCH /contact/:id](#update-contact-by-id)
 
 ### Create contact
 
