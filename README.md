@@ -128,7 +128,7 @@ GET /contact/:id
 - phone: string (optional)
 - email: string (optional)
 
-  Atleast one parameter is required.
+  Body cannot be empty.
 
 ##### Example body
 
