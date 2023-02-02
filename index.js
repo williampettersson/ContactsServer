@@ -30,6 +30,20 @@ app.post("/contact", (req, res) => {
     });
 });
 
+app.get("/contacts", async (req, res) => {
+  const list = [];
+  contacts
+    .find()
+    .forEach((doc) => list.push(doc))
+    .then(() => {
+      res.json({ contacts: list });
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+      console.error(err);
+    });
+});
+
 app.listen(port, () => {
   console.log(`Listening to port ${port}`);
 });
