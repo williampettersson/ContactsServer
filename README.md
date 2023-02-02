@@ -54,12 +54,14 @@ GET /contacts
 
 #### Returns
 
-Array of:
+Array of contacts
+
+Contact:
 
 - id: string
 - name: string
-- phone: string
-- email: string
+- phone: string || null
+- email: string || null
 
 ##### Example return
 
@@ -93,8 +95,8 @@ GET /contact/:id
 
 - id: string
 - name: string
-- phone: string
-- email: string
+- phone: string || null
+- email: string || null
 
 ##### Example return
 
