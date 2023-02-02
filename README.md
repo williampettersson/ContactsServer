@@ -117,6 +117,8 @@ GET /contact/:id
 
 ### Delete contact by id
 
+DELETE /contact/:id
+
 #### Status Codes
 
 - 200 OK
@@ -124,6 +126,8 @@ GET /contact/:id
 - 500 Server Error
 
 ### Update contact by id
+
+PATCH /contact/:id
 
 #### Body
 
