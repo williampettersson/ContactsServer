@@ -27,7 +27,7 @@ app.post("/contact", (req, res) => {
     });
 });
 
-app.get("/contacts", async (req, res) => {
+app.get("/contacts", (req, res) => {
   const list = [];
   contacts
     .find()
