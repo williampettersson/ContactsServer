@@ -23,7 +23,7 @@ app.post("/contact", (req, res) => {
   contacts
     .insertOne({ name: body.name, phone: body.phone, email: body.email })
     .then((result) => {
-      res.json({ id: result.insertedId });
+      res.status(201).json({ id: result.insertedId });
     })
     .catch((err) => {
       res.sendStatus(500);

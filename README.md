@@ -44,7 +44,7 @@ Body **must** contain phone **and/or** email.
 
 ##### Status Codes
 
-- 200 OK
+- 201 Created
 - 400 Bad Request
 - 500 Server Error
 
@@ -153,6 +153,7 @@ GET /contact/:id
 ## HTTP Status Code Summary
 
 - 200 OK - Everything worked as expected.
+- 201 Created - The request has been fulfilled, resulting in the creation of a new resource.
 - 400 Bad Request - The reques was unacceptable, often due to missing a required parameter.
 - 404 Not Found - The requested resource doesn't exist.
 - 500 Server Error - Something went wrong on our end.
