@@ -46,7 +46,14 @@ app.get("/contacts", async (req, res) => {
 });
 
 app.delete("/contact/:id", (req, res) => {
-  const id = ObjectId.createFromHexString(req.params.id);
+  let id;
+  try {
+    id = ObjectId.createFromHexString(req.params.id);
+  } catch {
+    res.sendStatus(400);
+    return;
+  }
+
   contacts
     .deleteOne({ _id: id })
     .then((result) => {
@@ -71,7 +78,14 @@ app.patch("/contact/:id", (req, res) => {
     return;
   }
 
-  const id = ObjectId.createFromHexString(req.params.id);
+  let id;
+  try {
+    id = ObjectId.createFromHexString(req.params.id);
+  } catch {
+    res.sendStatus(400);
+    return;
+  }
+
   const change = {};
 
   if (body.name) change.name = body.name;
