@@ -6,7 +6,7 @@
 - [GET /contacts](#get-all-contacts)
 - [GET /contact/:id](#get-contact-by-id)
 - [DELETE /contact/:id](#delete-contact-by-id)
-- [PUT /contact/:id](#update-contact-by-id)
+- [PATCH /contact/:id](#update-contact-by-id)
 
 ### Create contact
 
@@ -44,7 +44,7 @@ Body **must** contain phone **and/or** email.
 
 ##### Status Codes
 
-- 200 OK
+- 201 Created
 - 400 Bad Request
 - 500 Server Error
 
@@ -54,12 +54,14 @@ GET /contacts
 
 #### Returns
 
-Array of:
+Array of contacts
+
+Contact:
 
 - id: string
 - name: string
-- phone: string
-- email: string
+- phone: string || null
+- email: string || null
 
 ##### Example return
 
@@ -93,8 +95,8 @@ GET /contact/:id
 
 - id: string
 - name: string
-- phone: string
-- email: string
+- phone: string || null
+- email: string || null
 
 ##### Example return
 
@@ -110,17 +112,22 @@ GET /contact/:id
 #### Status Codes
 
 - 200 OK
+- 404 Not Found
 - 500 Server Error
 
 ### Delete contact by id
 
+DELETE /contact/:id
+
 #### Status Codes
 
 - 200 OK
-- 402 Request Failed
+- 404 Not Found
 - 500 Server Error
 
 ### Update contact by id
+
+PATCH /contact/:id
 
 #### Body
 
@@ -128,7 +135,7 @@ GET /contact/:id
 - phone: string (optional)
 - email: string (optional)
 
-  Atleast one parameter is required.
+  Body cannot be empty.
 
 ##### Example body
 
@@ -144,13 +151,13 @@ GET /contact/:id
 
 - 200 OK
 - 400 Bad Request
-- 402 Request Failed
+- 404 Not Found
 - 500 Server Error
 
 ## HTTP Status Code Summary
 
 - 200 OK - Everything worked as expected.
+- 201 Created - The request has been fulfilled, resulting in the creation of a new resource.
 - 400 Bad Request - The reques was unacceptable, often due to missing a required parameter.
-- 402 Request Failed - The parameters were valid but the request failed.
 - 404 Not Found - The requested resource doesn't exist.
 - 500 Server Error - Something went wrong on our end.
