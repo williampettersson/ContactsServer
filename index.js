@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { contacts } from "./controller/mongodb.controller.js";
+import { ObjectId } from "mongodb";
 
 dotenv.config();
 
@@ -37,6 +38,24 @@ app.get("/contacts", async (req, res) => {
     .forEach((doc) => list.push(doc))
     .then(() => {
       res.json({ contacts: list });
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+      console.error(err);
+    });
+});
+
+app.delete("/contact/:id", (req, res) => {
+  const id = ObjectId.createFromHexString(req.params.id);
+  contacts
+    .deleteOne({ _id: id })
+    .then((result) => {
+      if (result.deletedCount != 1) {
+        res.sendStatus(404);
+        return;
+      }
+
+      res.sendStatus(200);
     })
     .catch((err) => {
       res.sendStatus(500);

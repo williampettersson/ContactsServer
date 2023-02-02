@@ -112,6 +112,7 @@ GET /contact/:id
 #### Status Codes
 
 - 200 OK
+- 404 Not Found
 - 500 Server Error
 
 ### Delete contact by id
@@ -119,7 +120,7 @@ GET /contact/:id
 #### Status Codes
 
 - 200 OK
-- 402 Request Failed
+- 404 Not Found
 - 500 Server Error
 
 ### Update contact by id
@@ -146,13 +147,12 @@ GET /contact/:id
 
 - 200 OK
 - 400 Bad Request
-- 402 Request Failed
+- 404 Not Found
 - 500 Server Error
 
 ## HTTP Status Code Summary
 
 - 200 OK - Everything worked as expected.
 - 400 Bad Request - The reques was unacceptable, often due to missing a required parameter.
-- 402 Request Failed - The parameters were valid but the request failed.
 - 404 Not Found - The requested resource doesn't exist.
 - 500 Server Error - Something went wrong on our end.
