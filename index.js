@@ -9,10 +9,6 @@ const app = express();
 const port = process.env.port || 5500;
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("It's alive!");
-});
-
 app.post("/contact", (req, res) => {
   const body = req.body;
   if (!body?.name || (!body.phone && !body.email)) {
