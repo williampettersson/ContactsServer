@@ -45,6 +45,31 @@ app.get("/contacts", async (req, res) => {
     });
 });
 
+app.get("/contact/:id", (req, res) => {
+  let id;
+  try {
+    id = ObjectId.createFromHexString(req.params.id);
+  } catch {
+    res.sendStatus(400);
+    return;
+  }
+
+  contacts
+    .findOne({ _id: id })
+    .then((result) => {
+      if (!result) {
+        res.sendStatus(404);
+        return;
+      }
+
+      res.json(result);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+      console.error(err);
+    });
+});
+
 app.delete("/contact/:id", (req, res) => {
   let id;
   try {
