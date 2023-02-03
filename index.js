@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
 import { contacts } from "./controller/mongodb.controller.js";
 import { ObjectId } from "mongodb";
@@ -8,6 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.port || 5500;
 app.use(express.json());
+app.use(cors());
 
 app.post("/contact", (req, res) => {
   const body = req.body;
