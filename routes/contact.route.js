@@ -15,7 +15,7 @@ router.post("/", (req, res) => {
   if (!body?.name || (!body.phone && !body.email)) {
     res.status(400).json({
       statusCode: 400,
-      message: "Input must contain phone and/or email.",
+      message: "Input must contain name and phone and/or email.",
     });
     return;
   }
