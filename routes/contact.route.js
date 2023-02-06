@@ -6,18 +6,18 @@ const router = express.Router();
 
 const badReq = {
   statusCode: 400,
-  message: "Bad request! Server can or will not process the request.",
+  message: "Bad request! Input must contain phone and/or email.",
 };
 const serverError = { statusCode: 500, message: "Internal Server Error." };
 const notFound = {
   statusCode: 404,
-  message: "Server could not find the requested resource.",
+  message: "URL cannot be found or user is not found.",
 };
 
 router.post("/", (req, res) => {
   const body = req.body;
   if (!body?.name || (!body.phone && !body.email)) {
-    res.send(badReq);
+    res.status(400).json(badReq);
     return;
   }
 
@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
       res.status(201).json({ id: result.insertedId });
     })
     .catch((err) => {
-      res.send(serverError);
+      res.status(500).json(serverError);
       console.error(serverError.message);
     });
 });
@@ -45,7 +45,7 @@ router.get("/", (req, res) => {
       res.json({ contacts: list });
     })
     .catch((err) => {
-      res.send(serverError);
+      res.status(500).json(serverError);
       console.error(serverError.message);
     });
 });
@@ -55,7 +55,7 @@ router.get("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.send(badReq);
+    res.status(400).json(badReq);
     return;
   }
 
@@ -63,7 +63,7 @@ router.get("/:id", (req, res) => {
     .findOne({ _id: id })
     .then((result) => {
       if (!result) {
-        res.send(notFound);
+        res.status(404).json(notFound);
         return;
       }
 
@@ -73,7 +73,7 @@ router.get("/:id", (req, res) => {
       res.json(result);
     })
     .catch((err) => {
-      res.send(serverError);
+      res.status(500).json(serverError);
       console.error(err);
     });
 });
@@ -83,7 +83,7 @@ router.delete("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.send(notFound);
+    res.status(404).json(notFound);
     return;
   }
 
@@ -91,14 +91,14 @@ router.delete("/:id", (req, res) => {
     .deleteOne({ _id: id })
     .then((result) => {
       if (result.deletedCount != 1) {
-        res.send(notFound);
+        res.status(404).json(notFound);
         return;
       }
 
       res.sendStatus(200);
     })
     .catch((err) => {
-      res.send(serverError);
+      res.status(500).json(serverError);
       console.error(serverError.message);
     });
 });
@@ -107,7 +107,7 @@ router.patch("/:id", (req, res) => {
   const body = req.body;
 
   if (!body?.name && !body.phone && !body.email) {
-    res.send(notFound);
+    res.status(404).json(notFound);
     return;
   }
 
@@ -115,7 +115,7 @@ router.patch("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.send(notFound);
+    res.status(404).json(notFound);
     return;
   }
 
@@ -134,14 +134,14 @@ router.patch("/:id", (req, res) => {
       }
 
       if (!result.value) {
-        res.send(badReq);
+        res.status(400).json(badReq);
         return;
       }
 
-      res.send(serverError);
+      res.status(500).json(serverError);
     })
     .catch((err) => {
-      res.send(serverError);
+      res.status(500).json(serverError);
       console.error(serverError.message);
     });
 });
