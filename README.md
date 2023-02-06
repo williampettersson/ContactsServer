@@ -147,6 +147,38 @@ PATCH /contact/:id
 }
 ```
 
+### Error Objects
+
+- statusCode: int
+- message: string
+
+Bad Request
+
+```JSON
+{
+    "statusCode": 400,
+    "message": "Bad request! Server can or will not process the request."
+}
+```
+
+Not Found
+
+```JSON
+{
+    "statusCode": 404,
+    "message": "Server could not find the requested resource."
+}
+```
+
+Server Error
+
+```JSON
+{
+    "statusCode": 500,
+    "message": "Internal Server Error."
+}
+```
+
 #### Status Codes
 
 - 200 OK
