@@ -4,10 +4,6 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
-const badReq = {
-  statusCode: 400,
-  message: "Bad request! Input must contain phone and/or email.",
-};
 const serverError = { statusCode: 500, message: "Internal Server Error." };
 const notFound = {
   statusCode: 404,
@@ -17,7 +13,18 @@ const notFound = {
 router.post("/", (req, res) => {
   const body = req.body;
   if (!body?.name || (!body.phone && !body.email)) {
-    res.status(400).json(badReq);
+    res.status(400).json({
+      statusCode: 400,
+      message: "Input must contain phone and/or email.",
+    });
+    return;
+  }
+
+  if (body.name.length > 50 || body.phone.length > 15) {
+    res.status(400).json({
+      statusCode: 400,
+      message: "Name or phone have too many characters.",
+    });
     return;
   }
 
@@ -55,7 +62,7 @@ router.get("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.status(400).json(badReq);
+    res.status(400).json({ statusCode: 400, message: "Invalid Id" });
     return;
   }
 
@@ -134,7 +141,7 @@ router.patch("/:id", (req, res) => {
       }
 
       if (!result.value) {
-        res.status(400).json(badReq);
+        res.status(404).json(notFound);
         return;
       }
 
