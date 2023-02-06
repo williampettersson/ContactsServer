@@ -11,7 +11,12 @@ const port = process.env.port || 5500;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://contactbook-fb7v.onrender.com/",
+    origin: [
+      "https://contactbook-fb7v.onrender.com/",
+      "http://localhost:*",
+      "http://localhost:5500",
+      "http://localhost:5173",
+    ],
   })
 );
 app.use(Router("./routes"));
