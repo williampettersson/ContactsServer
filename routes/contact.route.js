@@ -13,6 +13,13 @@ const notFound = {
 router.post("/", (req, res) => {
   const body = req.body;
   if (!body?.name || (!body.phone && !body.email)) {
+    if (body.name == undefined) {
+      res.status(400).json({
+        statusCode: 400,
+        message: "Name is required",
+      });
+      return;
+    }
     res.status(400).json({
       statusCode: 400,
       message: "Input must contain name and phone and/or email.",
