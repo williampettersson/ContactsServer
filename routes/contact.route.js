@@ -4,10 +4,20 @@ import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
+const badReq = {
+  statusCode: 400,
+  message: "Bad request! Server can or will not process the request.",
+};
+const serverError = { statusCode: 500, message: "Internal Server Error." };
+const notFound = {
+  statusCode: 404,
+  message: "Server could not find the requested resource.",
+};
+
 router.post("/", (req, res) => {
   const body = req.body;
   if (!body?.name || (!body.phone && !body.email)) {
-    res.sendStatus(400);
+    res.send(badReq);
     return;
   }
 
@@ -17,8 +27,8 @@ router.post("/", (req, res) => {
       res.status(201).json({ id: result.insertedId });
     })
     .catch((err) => {
-      res.sendStatus(500);
-      console.error(err);
+      res.send(serverError);
+      console.error(serverError.message);
     });
 });
 
@@ -35,8 +45,8 @@ router.get("/", (req, res) => {
       res.json({ contacts: list });
     })
     .catch((err) => {
-      res.sendStatus(500);
-      console.error(err);
+      res.send(serverError);
+      console.error(serverError.message);
     });
 });
 
@@ -45,7 +55,7 @@ router.get("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.sendStatus(400);
+    res.send(badReq);
     return;
   }
 
@@ -53,7 +63,7 @@ router.get("/:id", (req, res) => {
     .findOne({ _id: id })
     .then((result) => {
       if (!result) {
-        res.sendStatus(404);
+        res.send(notFound);
         return;
       }
 
@@ -63,7 +73,7 @@ router.get("/:id", (req, res) => {
       res.json(result);
     })
     .catch((err) => {
-      res.sendStatus(500);
+      res.send(serverError);
       console.error(err);
     });
 });
@@ -73,7 +83,7 @@ router.delete("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.sendStatus(400);
+    res.send(notFound);
     return;
   }
 
@@ -81,15 +91,15 @@ router.delete("/:id", (req, res) => {
     .deleteOne({ _id: id })
     .then((result) => {
       if (result.deletedCount != 1) {
-        res.sendStatus(404);
+        res.send(notFound);
         return;
       }
 
       res.sendStatus(200);
     })
     .catch((err) => {
-      res.sendStatus(500);
-      console.error(err);
+      res.send(serverError);
+      console.error(serverError.message);
     });
 });
 
@@ -97,7 +107,7 @@ router.patch("/:id", (req, res) => {
   const body = req.body;
 
   if (!body?.name && !body.phone && !body.email) {
-    res.sendStatus(400);
+    res.send(notFound);
     return;
   }
 
@@ -105,7 +115,7 @@ router.patch("/:id", (req, res) => {
   try {
     id = ObjectId.createFromHexString(req.params.id);
   } catch {
-    res.sendStatus(400);
+    res.send(notFound);
     return;
   }
 
@@ -124,15 +134,15 @@ router.patch("/:id", (req, res) => {
       }
 
       if (!result.value) {
-        res.sendStatus(404);
+        res.send(badReq);
         return;
       }
 
-      res.sendStatus(500);
+      res.send(serverError);
     })
     .catch((err) => {
-      res.sendStatus(500);
-      console.error(err);
+      res.send(serverError);
+      console.error(serverError.message);
     });
 });
 
