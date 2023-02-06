@@ -29,7 +29,7 @@ app.post("/contact", (req, res) => {
     });
 });
 
-app.get("/contacts", (req, res) => {
+app.get("/contact", (req, res) => {
   const list = [];
   contacts
     .find()
@@ -53,7 +53,7 @@ app.get("/contact/:id", (req, res) => {
   }
 
   contacts
-    .findOne({ _id: id })
+    .findOne({ id: id })
     .then((result) => {
       if (!result) {
         res.sendStatus(404);
@@ -78,7 +78,7 @@ app.delete("/contact/:id", (req, res) => {
   }
 
   contacts
-    .deleteOne({ _id: id })
+    .deleteOne({ id: id })
     .then((result) => {
       if (result.deletedCount != 1) {
         res.sendStatus(404);
@@ -116,7 +116,7 @@ app.patch("/contact/:id", (req, res) => {
   if (body.email) change.email = body.email;
 
   contacts
-    .findOneAndUpdate({ _id: id }, { $set: change })
+    .findOneAndUpdate({ id: id }, { $set: change })
     .then((result) => {
       if (result.ok) {
         res.sendStatus(200);
