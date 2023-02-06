@@ -6,12 +6,12 @@ const router = express.Router();
 
 const badReq = {
   statusCode: 400,
-  message: "Bad request! Server can or will not process the request.",
+  message: "Bad request! Input must contain phone and/or email.",
 };
 const serverError = { statusCode: 500, message: "Internal Server Error." };
 const notFound = {
   statusCode: 404,
-  message: "Server could not find the requested resource.",
+  message: "URL cannot be found or user is not found.",
 };
 
 router.post("/", (req, res) => {

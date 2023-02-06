@@ -157,7 +157,7 @@ Bad Request
 ```JSON
 {
     "statusCode": 400,
-    "message": "Bad request! Server can or will not process the request."
+    "message": "Bad request! Input must contain phone and/or email."
 }
 ```
 
@@ -166,7 +166,7 @@ Not Found
 ```JSON
 {
     "statusCode": 404,
-    "message": "Server could not find the requested resource."
+    "message": "URL cannot be found or user is not found."
 }
 ```
 
