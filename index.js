@@ -9,7 +9,11 @@ dotenv.config();
 const app = express();
 const port = process.env.port || 5500;
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://contactbook-fb7v.onrender.com/",
+  })
+);
 app.use(Router("./routes"));
 
 app.use("/contact", contactRoute);
