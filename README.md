@@ -3,7 +3,7 @@
 ## Endpoints
 
 - [POST /contact](#create-contact)
-- [GET /contacts](#get-all-contacts)
+- [GET /contact](#get-all-contacts)
 - [GET /contact/:id](#get-contact-by-id)
 - [DELETE /contact/:id](#delete-contact-by-id)
 - [PATCH /contact/:id](#update-contact-by-id)
@@ -50,7 +50,7 @@ Body **must** contain phone **and/or** email.
 
 ### Get all contacts
 
-GET /contacts
+GET /contact
 
 #### Returns
 

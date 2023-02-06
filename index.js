@@ -29,7 +29,7 @@ app.post("/contact", (req, res) => {
     });
 });
 
-app.get("/contacts", (req, res) => {
+app.get("/contact", (req, res) => {
   const list = [];
   contacts
     .find()
